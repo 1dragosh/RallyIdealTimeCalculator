@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rally Ideal Time Calculator</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport'/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha512-jCaU0Dp3IbMDlZ6f6dSEQSnOrSsugG6F6YigRWnagi7HoOLshF1kwxLT4+xCZRgQsTNqpUKj6WmWOxsu9l3URA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css" integrity="sha512-+C1cmvw5D0Pfm6Gt9em3zp3OyebHM4wo05D38a0kXm7C1MRZZ9oPTbSX3KoRxAA0b2oHCqrcJEPikiXjsNXgtw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="wrapper ">
+
+
+        <div class="main-panel">
+            <div class="content">
+                <div class="row mx-0" style="width: 100%;">
+    
+                        <div class="card card-user" style="width: 100%;">
+                            <div class="card-header" style="text-align: center;">
+                                <h5 class="card-title">
+                                    Rally ideal time calculator
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 pr-1" style="margin: auto;">
+                                            <div class="form-group">
+                                                <label>Distance</label>
+                                                <input type="number" class="form-control" placeholder="Distance"
+                                                       id="distance" required>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="row">
+                                        <div class="col-md-6 pr-1" style="margin: auto;">
+                                            <div class="form-group">
+                                                <label>Average speed</label>
+                                                <input type="number" class="form-control" id="speed"
+                                                       value="45" placeholder="Average speed" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 pr-1" style="margin: auto;">
+                                            <div class="form-group">
+                                                <label>Neutralization time (minutes)</label>
+                                                <input type="number" class="form-control" id="neutralization"
+                                                       value="0" placeholder="Neutralization time" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 pr-1" style="margin: auto;">
+                                            <div class="form-group">
+                                                <label>Neutralizations</label>
+                                                <input type="number" class="form-control" id="stops"
+                                                       value="0" placeholder="No. of stops" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 pr-1" style="margin: auto; text-align: center;">
+                                            <div class="update">
+                                                <button class="btn btn-primary btn-round" onclick="itime()">Calculate</button>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-header" style="text-align: center;margin-top: 30px;">
+                                        <h5 class="card-title" id="time"></h5>
+                                    </div>
+  
+                            </div>
+                        </div>
+    
+                </div>
+            </div>
+
+    
+        </div>
+    </div>
+    <footer style="text-align: center;margin-top:10px;">&copy; 1dragosh</footer>
+</body>
+<script>
+    function timeConvert(n, seconds) {
+        var num = n;
+        var hours = (num / 60);
+        var rhours = Math.floor(hours);
+        var minutes = (hours - rhours) * 60;
+        var rminutes = Math.round(minutes);
+        return rhours + " hour(s), " + rminutes + " minute(s) and " + seconds + " seconds";
+    }
+
+    function itime() {
+        let stops = document.getElementById('stops').value;
+        let neutralization_minutes = document.getElementById('neutralization').value;
+        let neutralization_seconds_total = parseInt(stops) * (parseInt(neutralization_minutes) * 60);
+        let speed = parseInt(document.getElementById('speed').value);
+        let distance = parseFloat(document.getElementById('distance').value);
+        let fs = (distance * 3600) / speed;
+        let mare = Math.round(fs) + neutralization_seconds_total;
+        let minute = mare / 60;
+        let sone = parseInt(minute.toString().split('.')[0]);
+        let seconds = mare - (sone * 60);
+        let hours = timeConvert(minute.toString().split('.')[0], seconds);
+        document.getElementById('time').innerText = hours;
+    }
+</script>
+
+</html>
